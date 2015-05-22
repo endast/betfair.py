@@ -19,11 +19,15 @@ IDENTITY_URLS = collections.defaultdict(
     italy='https://identitysso.betfair.it/api/',
 )
 
-API_URLS = collections.defaultdict(
+BETTING_API_URLS = collections.defaultdict(
     lambda: 'https://api.betfair.com/exchange/betting/json-rpc/v1',
     australia='https://api-au.betfair.com/exchange/betting/json-rpc/v1',
 )
 
+ACCOUNTS_API_URLS = collections.defaultdict(
+    lambda: 'https://api.betfair.com/exchange/account/json-rpc/v1',
+    australia='https://api-au.betfair.com/exchange/account/json-rpc/v1',
+)
 
 class Betfair(object):
     """Betfair API client.
