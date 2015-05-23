@@ -52,7 +52,15 @@ class Betfair(object):
 
     @property
     def api_url(self):
-        return API_URLS[self.locale]
+        return BETTING_API_URLS[self.locale]
+
+    @property
+    def betting_api_url(self):
+        return BETTING_API_URLS[self.locale]
+
+    @property
+    def accounts_api_url(self):
+        return ACCOUNTS_API_URLS[self.locale]
 
     @property
     def headers(self):
@@ -73,10 +81,12 @@ class Betfair(object):
         if data.get('status') != 'SUCCESS':
             raise exceptions.BetfairAuthError(response, data)
 
-    def make_api_request(self, method, params, codes=None, model=None):
+    def make_api_request(self, method, params,api_url, codes=None, model=None):
         payload = utils.make_payload(method, params)
+        api_url = self.api_url[api_url]
+
         response = self.session.post(
-            self.api_url,
+            api_url,
             data=json.dumps(payload),
             headers=self.headers,
         )
@@ -142,6 +152,7 @@ class Betfair(object):
             'listEventTypes',
             utils.get_kwargs(locals()),
             model=models.EventTypeResult,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -156,6 +167,7 @@ class Betfair(object):
             'listCompetitions',
             utils.get_kwargs(locals()),
             model=models.CompetitionResult,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -170,6 +182,7 @@ class Betfair(object):
             'listTimeRanges',
             utils.get_kwargs(locals()),
             model=models.TimeRangeResult,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -184,6 +197,7 @@ class Betfair(object):
             'listEvents',
             utils.get_kwargs(locals()),
             model=models.EventResult,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -198,6 +212,7 @@ class Betfair(object):
             'listMarketTypes',
             utils.get_kwargs(locals()),
             model=models.MarketTypeResult,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -212,6 +227,7 @@ class Betfair(object):
             'listCountries',
             utils.get_kwargs(locals()),
             model=models.CountryCodeResult,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -226,6 +242,7 @@ class Betfair(object):
             'listCountries',
             utils.get_kwargs(locals()),
             model=models.VenueResult,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -245,6 +262,7 @@ class Betfair(object):
             'listMarketCatalogue',
             utils.get_kwargs(locals()),
             model=models.MarketCatalogue,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -264,6 +282,7 @@ class Betfair(object):
             'listMarketBook',
             utils.get_kwargs(locals()),
             model=models.MarketBook,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -283,6 +302,7 @@ class Betfair(object):
             'listMarketProfitAndLoss',
             utils.get_kwargs(locals()),
             model=models.MarketProfitAndLoss,
+            api_url="betting_api_url"
         )
 
     # Chunked iterators for list methods
@@ -333,6 +353,7 @@ class Betfair(object):
             'listCurrentOrders',
             utils.get_kwargs(locals()),
             model=models.CurrentOrderSummaryReport,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -360,6 +381,7 @@ class Betfair(object):
             'listClearedOrders',
             utils.get_kwargs(locals()),
             model=models.ClearedOrderSummaryReport,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -375,6 +397,7 @@ class Betfair(object):
             'placeOrders',
             utils.get_kwargs(locals()),
             model=models.PlaceExecutionReport,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -390,6 +413,7 @@ class Betfair(object):
             'cancelOrders',
             utils.get_kwargs(locals()),
             model=models.CancelInstructionReport,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -405,6 +429,7 @@ class Betfair(object):
             'replaceOrders',
             utils.get_kwargs(locals()),
             model=models.ReplaceExecutionReport,
+            api_url="betting_api_url"
         )
 
     @utils.requires_login
@@ -420,4 +445,5 @@ class Betfair(object):
             'updateOrders',
             utils.get_kwargs(locals()),
             model=models.UpdateExecutionReport,
+            api_url="betting_api_url"
         )
