@@ -98,16 +98,23 @@ def serialize_params(params):
     return out
 
 
-def make_payload(method, params):
+def make_payload(method, params, api_endpoint):
     """Build Betfair JSON-RPC payload.
 
     :param str method: Betfair endpoint
     :param dict params: Request parameters
 
     """
+
+    if api_endpoint == 'betting':
+        base_method = 'SportsAPING'
+
+    if api_endpoint == 'accounts':
+        base_method = 'AccountAPING'
+
     payload = {
         'jsonrpc': '2.0',
-        'method': 'SportsAPING/v1.0/{0}'.format(method),
+        'method': base_method + '/v1.0/{0}'.format(method),
         'params': serialize_params(params),
         'id': 1,
     }
