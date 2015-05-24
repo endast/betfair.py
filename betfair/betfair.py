@@ -469,3 +469,18 @@ class Betfair(object):
             model=models.AccountFundsResponse,
             api_endpoint="accounts"
         )
+
+
+    @utils.requires_login
+    def get_account_details(self):
+        """Returns the details relating your account, including your 
+        discount rate and Betfair point balance.
+        """
+
+        return self.make_api_request(
+            'getAccountDetails',
+            utils.get_kwargs(locals()),
+            model=models.AccountDetailsResponse,
+            api_endpoint="accounts"
+        )
+
