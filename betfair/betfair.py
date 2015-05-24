@@ -457,8 +457,7 @@ class Betfair(object):
 # Accounts methods
 
     @utils.requires_login
-    def get_account_funds(
-            self, wallet):
+    def get_account_funds(self, wallet):
         """Get available to bet amount.
 
         param Wallet wallet
