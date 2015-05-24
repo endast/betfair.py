@@ -452,3 +452,21 @@ class Betfair(object):
             model=models.UpdateExecutionReport,
             api_endpoint="betting"
         )
+
+
+# Accounts methods
+
+    @utils.requires_login
+    def get_account_funds(
+            self, wallet):
+        """Get available to bet amount.
+
+        param Wallet wallet
+        """
+
+        return self.make_api_request(
+            'getAccountFunds',
+            utils.get_kwargs(locals()),
+            model=models.AccountFundsResponse,
+            api_endpoint="accounts"
+        )
